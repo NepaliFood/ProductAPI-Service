@@ -5,8 +5,8 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-COPY ["/ProductAPI/ProductAPI/ProductAPI.csproj", "ProductAPI/"]
-RUN dotnet restore "/ProductAPI/ProductAPI.csproj"
+COPY *.csproj ./
+RUN dotnet restore
 COPY . .
 WORKDIR "/src/ProductAPI/ProductAPI"
 RUN dotnet build "ProductAPI.csproj" -c Release -o /app/build
