@@ -6,16 +6,16 @@ EXPOSE 44317
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Services/Catalog/Catalog.API/Catalog.API.csproj", "Services/Catalog/Catalog.API/"]
-RUN dotnet restore "Services/Catalog/Catalog.API/Catalog.API.csproj"
+COPY ["ProductAPI/ProductAPI.csproj", "ProductAPI/"]
+RUN dotnet restore "ProductAPI/ProductAPI.csproj"
 COPY . .
-WORKDIR "/src/Services/Catalog/Catalog.API"
-RUN dotnet build "Catalog.API.csproj" -c Release -o /app/build
+WORKDIR "/src/ProductAPI"
+RUN dotnet build "ProductAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Catalog.API.csproj" -c Release -o /app/publish
+RUN dotnet publish "ProductAPI.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Catalog.API.dll"]
+ENTRYPOINT ["dotnet", "ProductAPI.dll"]
