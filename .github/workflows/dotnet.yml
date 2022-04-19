@@ -1,0 +1,29 @@
+name: .NET CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore ./src/NepFoodBackend.sln
+      
+    - name: Build app
+      run: dotnet build ./src/NepFoodBackend.sln
+      
+    - name: Test
+      run: dotnet test ./src/NepFoodBackend.sln
+
