@@ -1,17 +1,20 @@
-# syntax=docker/dockerfile:1
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
-# Copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+COPY ["/ProductAPI/ProductAPI/ProductAPI.csproj", "ProductAPI/"]
+RUN dotnet restore "/ProductAPI/ProductAPI.csproj"
+COPY . .
+WORKDIR "/src/ProductAPI/ProductAPI"
+RUN dotnet build "ProductAPI.csproj" -c Release -o /app/build
 
-# Copy everything else and build
-COPY ../engine/examples ./
-RUN dotnet publish -c Release -o out
+FROM build AS publish
+RUN dotnet publish "ProductAPI.csproj" -c Release -o /app/publish
 
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "ProductAPI.dll"]
