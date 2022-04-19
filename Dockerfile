@@ -7,9 +7,10 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["ProductAPI/ProductAPI.csproj", "./"]
+COPY ["ProductAPI/ProductAPI.csproj", "ProductAPI/"]
 RUN dotnet restore "ProductAPI/ProductAPI.csproj" 
 COPY . .
+WORKDIR "/src/ProductAPI"
 RUN dotnet build "ProductAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
