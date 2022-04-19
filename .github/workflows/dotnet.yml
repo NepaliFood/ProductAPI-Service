@@ -19,11 +19,9 @@ jobs:
         dotnet-version: 5.0.x
         
     - name: Restore dependencies
-      run: dotnet restore ./src/NepFoodBackend.sln
+      run: dotnet restore 
       
     - name: Build app
-      run: dotnet build ./src/NepFoodBackend.sln
-      
-    - name: Test
-      run: dotnet test ./src/NepFoodBackend.sln
+      run: dotnet build 
+
 
