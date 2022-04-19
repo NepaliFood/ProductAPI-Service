@@ -19,10 +19,10 @@ jobs:
         dotnet-version: 5.0.x
         
     - name: Restore dependencies
-      run: dotnet restore ./ProductAPI.sln
+      run: dotnet restore ./ProductAPI/ProductAPI.sln
       
     - name: Build app
-      run: dotnet build ./ProductAPI.sln
+      run: dotnet build ./ProductAPI/ProductAPI.sln
 
   docker_build_push:
       name: Publish Docker Image
