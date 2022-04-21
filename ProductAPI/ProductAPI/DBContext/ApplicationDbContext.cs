@@ -15,7 +15,7 @@ namespace ProducAPI.DBContext
         }
         public DbSet<Product> Products { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+       /* protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
@@ -85,6 +85,6 @@ namespace ProducAPI.DBContext
                 Price = 10,
                 SpicyLevel = "Medium"
             });
-        }
+        }*/
     }
 }
